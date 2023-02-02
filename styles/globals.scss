@@ -11,3 +11,40 @@
 body {
   font-size: 1.6rem;
 }
+
+label {
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid #d1d1d1;
+  box-shadow: inset 0px 4px 10px rgba(216, 216, 216, 0.25);
+  border-radius: 4px;
+}
+
+button {
+  padding: 1rem;
+  width: 100%;
+  cursor: pointer;
+  background-color: #0065ff;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  font-size: 1.8rem;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
