@@ -15,7 +15,6 @@ export default function PatientPage() {
         }
       })
       .then(response => {
-        console.log('aqui')
         setPatients(() => response.data)
       })
       .catch(e => console.error(e))

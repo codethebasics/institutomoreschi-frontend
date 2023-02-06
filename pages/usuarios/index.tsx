@@ -1,11 +1,11 @@
-import axios from 'axios'
 import styles from '@/styles/usuarios/UsersPage.module.scss'
-import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
-import Image from 'next/image'
 import AddIcon from '@mui/icons-material/Add'
+import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
+import axios from 'axios'
 
-import { useState, useEffect } from 'react'
+import UserAvatar from '@/components/users/UserAvatar'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 type User = {
   id: string
@@ -35,16 +35,11 @@ const UserStatusBadge = ({ status }: any) => {
   )
 }
 
-export const CardUser = ({ id, name, email, img, active }: any) => {
+export const CardUser = ({ id, name, email, active }: any) => {
   return (
     <div className={styles.cardUser}>
       <div className={styles.avatar}>
-        <Image
-          alt="Imagem do usuário"
-          src={`https://randomuser.me/api/portraits/men/${img}.jpg`}
-          width={75}
-          height={75}
-        />
+        <UserAvatar user={{ id, name, email, active }} size={75} />
         <UserStatusBadge status={active} />
       </div>
       <div className={styles.info}>
@@ -75,7 +70,6 @@ export const UserList = ({ usuarios, filter }: any) => {
             name={usuario.name}
             email={usuario.email}
             active={usuario.active}
-            img={Math.floor(Math.random() * 100)}
           />
         ))}
     </div>

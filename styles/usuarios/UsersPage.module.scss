@@ -75,7 +75,6 @@
   }
 
   .userStatus {
-    background: lime;
     width: 100%;
   }
 
@@ -88,9 +87,6 @@
     > div:first-child {
       font-weight: bold;
       font-size: 1.6rem;
-    }
-
-    > div:last-child {
     }
   }
 
@@ -111,7 +107,7 @@
     color: #fff;
     border-radius: 0.3rem;
     position: relative;
-    margin-top: -1rem;
+    margin-top: -2rem;
   }
 
   .inactive {
@@ -120,7 +116,7 @@
     color: #fff;
     border-radius: 0.3rem;
     margin: 0.2rem 0;
-    margin-top: -1rem;
+    margin-top: -2rem;
   }
 }
 
@@ -131,8 +127,8 @@
   background: #0065ff;
   color: #fff;
   position: fixed;
+  left: calc(50vw - 2.5rem);
   bottom: 7.5rem;
-  right: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
