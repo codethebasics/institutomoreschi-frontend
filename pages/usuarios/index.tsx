@@ -18,14 +18,16 @@ const SearchInput = () => {
 }
 
 const UserStatusBadge = ({ status }: any) => {
-  return status.toLowerCase() === 'active' ? (
-    <p className={`${styles.badge} ${styles.active}`}>&#10004;</p>
-  ) : (
-    <p className={`${styles.badge} ${styles.inactive}`}>&#10006;</p>
+  return (
+    <div className={`${styles.statusBadge}`}>
+      <div className={`${styles[status.toLowerCase()]}`}>
+        {status.toLowerCase() === 'active' ? 'ativo' : 'inativo'}
+      </div>
+    </div>
   )
 }
 
-export const CardUser = ({ id, name, email, img }) => {
+export const CardUser = ({ id, name, email, img, active }: any) => {
   return (
     <div className={styles.cardUser}>
       <div className={styles.avatar}>
@@ -35,6 +37,7 @@ export const CardUser = ({ id, name, email, img }) => {
           width={75}
           height={75}
         />
+        <UserStatusBadge status={active} />
       </div>
       <div className={styles.info}>
         <div>{name}</div>
@@ -53,18 +56,15 @@ export const CardUser = ({ id, name, email, img }) => {
 export const UserList = ({ usuarios }: any) => {
   return (
     <div className={styles.userListContainer}>
-      {usuarios.map(usuario => (
-        // <Link
-        //   href={`${process.env.NEXT_PUBLIC_APP_URL}/usuarios/${usuario.id}`}
-        //   key={usuario.id}
-        // >
+      {usuarios.map((usuario: any) => (
         <CardUser
+          key={usuario.id}
           id={usuario.id}
           name={usuario.name}
           email={usuario.email}
+          active={usuario.active}
           img={Math.floor(Math.random() * 100)}
         />
-        // </Link>
       ))}
     </div>
   )

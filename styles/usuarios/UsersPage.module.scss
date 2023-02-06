@@ -58,12 +58,18 @@
     padding: 1rem;
     flex-grow: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
     img {
       border-radius: 100%;
     }
+  }
+
+  .userStatus {
+    background: lime;
+    width: 100%;
   }
 
   .info {
@@ -85,5 +91,26 @@
     display: flex;
     justify-content: flex-end;
     padding: 1rem;
+  }
+}
+
+.statusBadge {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+
+  .active {
+    padding: 0.2rem 0.5rem;
+    background-color: rgb(27, 126, 27);
+    color: #fff;
+    border-radius: 0.3rem;
+    margin: 0.2rem 0;
+  }
+
+  .inactive {
+    padding: 0.2rem 0.5rem;
+    background-color: rgb(228, 41, 41);
+    color: #fff;
+    border-radius: 0.3rem;
+    margin: 0.2rem 0;
   }
 }
