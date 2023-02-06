@@ -1,8 +1,8 @@
 import styles from '@/styles/auth/AuthPage.module.scss'
 import Link from 'next/link'
 
-import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
 
 export default function AuthPage() {
   const router = useRouter()
@@ -12,7 +12,7 @@ export default function AuthPage() {
     handleSubmit,
     reset,
     getValues,
-    formState: { errors, isLoading, isSubmitting, isValid }
+    formState: { isValid }
   } = useForm()
 
   const login = () => {
