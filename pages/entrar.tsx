@@ -2,9 +2,11 @@ import styles from '@/styles/auth/AuthPage.module.scss'
 import Link from 'next/link'
 
 import { useForm } from 'react-hook-form'
-import MailOutlineIcon from '@mui/icons-material/MailOutline'
+import { useRouter } from 'next/router'
 
 export default function AuthPage() {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -17,6 +19,8 @@ export default function AuthPage() {
     const { email, password } = getValues()
     console.log('email', email)
     console.log('password', password)
+    reset()
+    router.push('/')
   }
 
   const BottomControllers = () => {
@@ -32,34 +36,18 @@ export default function AuthPage() {
     )
   }
 
-  const Footer = () => {
-    return (
-      <div className={styles.footer}>
-        <div className={styles.email}>
-          <MailOutlineIcon />
-          suporte@institutomoreschi.com.br
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div id={styles.authPageContainer}>
       <form id={styles.form} onSubmit={handleSubmit(login)}>
         <div>
           <label>E-mail</label>
-          <input
-            type="email"
-            {...register('email', { required: true })}
-            placeholder="joaodasilva@email.com"
-          />
+          <input type="email" {...register('email', { required: true })} />
         </div>
         <div>
           <label>Senha</label>
           <input
             type="password"
             {...register('password', { required: true })}
-            placeholder="•••••••"
           />
         </div>
         <div className={styles.cta}>
@@ -69,7 +57,6 @@ export default function AuthPage() {
         </div>
       </form>
       <BottomControllers />
-      <Footer />
     </div>
   )
 }

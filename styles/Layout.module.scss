@@ -1,0 +1,65 @@
+#app {
+  height: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header'
+    'content'
+    'footer';
+}
+
+.header,
+.content,
+.footer {
+  padding: 1rem;
+}
+
+.header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: auto;
+  }
+}
+
+.content {
+  grid-area: content;
+  overflow: auto;
+  background: #fafafa;
+
+  > div {
+    max-width: 900px;
+    margin: auto;
+  }
+}
+
+.footer {
+  grid-area: footer;
+  border-top: 1px solid #ccc;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: auto;
+  }
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 1.5rem;
+}
