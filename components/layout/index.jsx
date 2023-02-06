@@ -9,6 +9,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LocalHospitalOutlinedIcon from '@mui/icons-material/LocalHospitalOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
+import MenuIcon from '@mui/icons-material/Menu'
 
 import { Lobster } from '@next/font/google'
 import Link from 'next/link'
@@ -19,7 +20,7 @@ const lobster = Lobster({
 })
 
 const Brand = styled.label`
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #444;
 `
 
@@ -30,7 +31,7 @@ export default function Layout({ children }) {
         <Brand>
           <div className={lobster.className}>Instituto Moreschi</div>
         </Brand>
-        <HamburgerMenuIcon color={'#222'} width={40} height={35} />
+        <MenuIcon color={'#222'} fontSize="large" />
       </Header>
       <div className={styles.content}>
         <div>{children}</div>

@@ -67,11 +67,9 @@ a {
     color: #888;
   }
 
-  &:active {
-    color: #222;
-  }
-
-  &:focus {
+  &:active,
+  &:focus,
+  &:hover {
     color: #222;
   }
 }

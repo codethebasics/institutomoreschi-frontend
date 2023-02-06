@@ -1,5 +1,6 @@
 import axios from 'axios'
 import styles from '@/styles/usuarios/UsersPage.module.scss'
+import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
 
 import { useState, useEffect } from 'react'
 
@@ -10,6 +11,18 @@ type User = {
   active: string
 }
 
+const SearchInput = () => {
+  return <input type="text" placeholder="Pesquisar por nome ou e-mail" />
+}
+
+const UserStatusBadge = ({ status }: any) => {
+  return status.toLowerCase() === 'active' ? (
+    <p className={`${styles.badge} ${styles.active}`}>&#10004;</p>
+  ) : (
+    <p className={`${styles.badge} ${styles.inactive}`}>&#10006;</p>
+  )
+}
+
 export const UserList = ({ usuarios }: any) => {
   return (
     <div className={styles.userListContainer}>
@@ -18,7 +31,8 @@ export const UserList = ({ usuarios }: any) => {
           <tr>
             <th>Nome</th>
             <th>E-mail</th>
-            <th>Status</th>
+            <th style={{ textAlign: 'center' }}>Ativo</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -27,7 +41,15 @@ export const UserList = ({ usuarios }: any) => {
                 <tr key={usuario.id}>
                   <td>{usuario.name}</td>
                   <td>{usuario.email}</td>
-                  <td>{usuario.active}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <UserStatusBadge status={usuario.active} />
+                  </td>
+                  <td style={{ textAlign: 'center' }}>
+                    <ContentPasteSearchIcon
+                      fontSize="large"
+                      className={styles.detail}
+                    />
+                  </td>
                 </tr>
               ))
             : null}
@@ -52,23 +74,11 @@ export default function UsersPage() {
   }, [])
 
   return (
-    <>
-      <h3>Usuários cadastrados</h3>
-      <br />
+    <div className={styles.userPageContainer}>
+      <div className={styles.searchContainer}>
+        <SearchInput />
+      </div>
       <UserList usuarios={usuarios} />
-    </>
+    </div>
   )
-}
-
-export async function getServerSideProps() {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/users/`,
-    {
-      headers: {
-        Accept: 'application/json'
-      }
-    }
-  )
-  const usuarios = response.data
-  return { props: { usuarios } }
 }

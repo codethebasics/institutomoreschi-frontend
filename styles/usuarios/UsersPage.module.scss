@@ -1,3 +1,50 @@
+.userPageContainer {
+  padding: 0.5rem;
+
+  .searchContainer {
+    padding: 1rem 0.5rem;
+  }
+}
+
 .userListContainer {
   overflow-y: auto;
+
+  table {
+    font-size: 1.3rem;
+    color: #444;
+
+    border-collapse: separate;
+
+    tbody {
+      tr {
+        transition: background 0.2s;
+
+        &:nth-child(odd) {
+          background: #ebe7e7;
+        }
+
+        &:hover {
+          background-color: #f1f4f7;
+        }
+      }
+    }
+  }
+}
+
+.badge {
+  &.active {
+    color: rgb(20, 151, 20);
+  }
+  &.inactive {
+    color: rgb(212, 21, 21);
+  }
+}
+
+.detail {
+  color: #888;
+
+  &:hover {
+    color: #444;
+    cursor: pointer;
+  }
 }
