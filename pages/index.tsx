@@ -1,9 +1,5 @@
 import PatientPage from './pacientes'
 
 export default function Home() {
-  return (
-    <div>
-      <PatientPage />
-    </div>
-  )
+  return <PatientPage />
 }

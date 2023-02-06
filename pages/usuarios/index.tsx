@@ -1,8 +1,10 @@
 import axios from 'axios'
 import styles from '@/styles/usuarios/UsersPage.module.scss'
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
+import Image from 'next/image'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 
 type User = {
   id: string
@@ -23,38 +25,47 @@ const UserStatusBadge = ({ status }: any) => {
   )
 }
 
+export const CardUser = ({ id, name, email, img }) => {
+  return (
+    <div className={styles.cardUser}>
+      <div className={styles.avatar}>
+        <Image
+          alt="Imagem do usuário"
+          src={`https://randomuser.me/api/portraits/men/${img}.jpg`}
+          width={75}
+          height={75}
+        />
+      </div>
+      <div className={styles.info}>
+        <div>{name}</div>
+        <div>{email}</div>
+        <div>(61) 9 8577 0401</div>
+      </div>
+      <div className={styles.cta}>
+        <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/usuarios/${id}`}>
+          <ContentPasteSearchIcon fontSize="large" />
+        </Link>
+      </div>
+    </div>
+  )
+}
+
 export const UserList = ({ usuarios }: any) => {
   return (
     <div className={styles.userListContainer}>
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th style={{ textAlign: 'center' }}>Ativo</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuarios && usuarios.length
-            ? usuarios.map((usuario: User) => (
-                <tr key={usuario.id}>
-                  <td>{usuario.name}</td>
-                  <td>{usuario.email}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    <UserStatusBadge status={usuario.active} />
-                  </td>
-                  <td style={{ textAlign: 'center' }}>
-                    <ContentPasteSearchIcon
-                      fontSize="large"
-                      className={styles.detail}
-                    />
-                  </td>
-                </tr>
-              ))
-            : null}
-        </tbody>
-      </table>
+      {usuarios.map(usuario => (
+        // <Link
+        //   href={`${process.env.NEXT_PUBLIC_APP_URL}/usuarios/${usuario.id}`}
+        //   key={usuario.id}
+        // >
+        <CardUser
+          id={usuario.id}
+          name={usuario.name}
+          email={usuario.email}
+          img={Math.floor(Math.random() * 100)}
+        />
+        // </Link>
+      ))}
     </div>
   )
 }

@@ -33,9 +33,7 @@ export default function Layout({ children }) {
         </Brand>
         <MenuIcon color={'#222'} fontSize="large" />
       </Header>
-      <div className={styles.content}>
-        <div>{children}</div>
-      </div>
+      <div className={styles.content}>{children}</div>
       <Footer>
         <div className={styles.circle}>
           <Link href={'/'}>
