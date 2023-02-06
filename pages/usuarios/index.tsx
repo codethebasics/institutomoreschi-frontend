@@ -2,6 +2,7 @@ import axios from 'axios'
 import styles from '@/styles/usuarios/UsersPage.module.scss'
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
 import Image from 'next/image'
+import AddIcon from '@mui/icons-material/Add'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -13,8 +14,15 @@ type User = {
   active: string
 }
 
-const SearchInput = () => {
-  return <input type="text" placeholder="Pesquisar por nome ou e-mail" />
+const SearchInput = ({ text, onChange }: any) => {
+  return (
+    <input
+      type="text"
+      placeholder="Pesquisar por nome ou e-mail"
+      value={text}
+      onChange={onChange}
+    />
+  )
 }
 
 const UserStatusBadge = ({ status }: any) => {
@@ -53,25 +61,30 @@ export const CardUser = ({ id, name, email, img, active }: any) => {
   )
 }
 
-export const UserList = ({ usuarios }: any) => {
+export const UserList = ({ usuarios, filter }: any) => {
+  const _filter = filter.toLowerCase().trim()
+
   return (
     <div className={styles.userListContainer}>
-      {usuarios.map((usuario: any) => (
-        <CardUser
-          key={usuario.id}
-          id={usuario.id}
-          name={usuario.name}
-          email={usuario.email}
-          active={usuario.active}
-          img={Math.floor(Math.random() * 100)}
-        />
-      ))}
+      {usuarios
+        .filter((usuario: any) => usuario.name.toLowerCase().includes(_filter))
+        .map((usuario: any) => (
+          <CardUser
+            key={usuario.id}
+            id={usuario.id}
+            name={usuario.name}
+            email={usuario.email}
+            active={usuario.active}
+            img={Math.floor(Math.random() * 100)}
+          />
+        ))}
     </div>
   )
 }
 
 export default function UsersPage() {
   const [usuarios, setUsuarios] = useState<User[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     axios
@@ -87,9 +100,20 @@ export default function UsersPage() {
   return (
     <div className={styles.userPageContainer}>
       <div className={styles.searchContainer}>
-        <SearchInput />
+        <SearchInput
+          text={searchQuery}
+          onChange={(e: any) => setSearchQuery(e.target.value)}
+        />
+        <div
+          className={styles.userCount}
+        >{`${usuarios.length} usuários encontrados`}</div>
       </div>
-      <UserList usuarios={usuarios} />
+      <UserList usuarios={usuarios} filter={searchQuery} />
+      <Link href={'/usuarios/novo'}>
+        <div className={styles.floatingButton}>
+          <AddIcon sx={{ fontSize: 40 }} />
+        </div>
+      </Link>
     </div>
   )
 }

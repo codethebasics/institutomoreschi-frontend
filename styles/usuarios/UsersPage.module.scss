@@ -10,6 +10,13 @@
   .searchContainer {
     padding: 1rem 0.5rem;
     grid-area: search;
+
+    .userCount {
+      font-size: 1.3rem;
+      display: flex;
+      justify-content: flex-end;
+      color: #888;
+    }
   }
 
   .userListContainer {
@@ -95,7 +102,7 @@
 }
 
 .statusBadge {
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-transform: uppercase;
 
   .active {
@@ -103,7 +110,8 @@
     background-color: rgb(27, 126, 27);
     color: #fff;
     border-radius: 0.3rem;
-    margin: 0.2rem 0;
+    position: relative;
+    margin-top: -1rem;
   }
 
   .inactive {
@@ -112,5 +120,28 @@
     color: #fff;
     border-radius: 0.3rem;
     margin: 0.2rem 0;
+    margin-top: -1rem;
+  }
+}
+
+.floatingButton {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 100%;
+  background: #0065ff;
+  color: #fff;
+  position: fixed;
+  bottom: 7.5rem;
+  right: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 10px #888;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 1;
   }
 }
