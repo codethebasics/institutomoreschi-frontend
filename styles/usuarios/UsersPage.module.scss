@@ -10,6 +10,7 @@
   .searchContainer {
     padding: 1rem 0.5rem;
     grid-area: search;
+    border-bottom: 1px solid #ccc;
 
     .userCount {
       font-size: 1.3rem;
@@ -20,13 +21,13 @@
   }
 
   .userListContainer {
-    padding: 0.5rem;
+    padding: 1.5rem 0.5rem;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     overflow-y: auto;
     grid-area: list;
-    max-height: 75vh;
+    max-height: 65vh;
   }
 }
 
@@ -127,8 +128,8 @@
   background: #0065ff;
   color: #fff;
   position: fixed;
-  left: calc(50vw - 2.5rem);
-  bottom: 7.5rem;
+  right: 2.5rem;
+  bottom: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;

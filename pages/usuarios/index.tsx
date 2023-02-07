@@ -1,9 +1,9 @@
 import styles from '@/styles/usuarios/UsersPage.module.scss'
-import AddIcon from '@mui/icons-material/Add'
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
 import axios from 'axios'
 
 import UserAvatar from '@/components/users/UserAvatar'
+import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -76,6 +76,18 @@ export const UserList = ({ usuarios, filter }: any) => {
   )
 }
 
+const Actions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0.5rem;
+  border-top: 1px solid #ccc;
+`
+
+const AddButton = styled.button`
+  font-size: 1.4rem;
+  width: auto;
+`
+
 export default function UsersPage() {
   const [usuarios, setUsuarios] = useState<User[]>([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -91,6 +103,10 @@ export default function UsersPage() {
       .catch(e => console.error(e))
   }, [])
 
+  const addUserButtonHandler = () => {
+    console.log('clicked')
+  }
+
   return (
     <div className={styles.userPageContainer}>
       <div className={styles.searchContainer}>
@@ -103,11 +119,9 @@ export default function UsersPage() {
         >{`${usuarios.length} usuários encontrados`}</div>
       </div>
       <UserList usuarios={usuarios} filter={searchQuery} />
-      <Link href={'/usuarios/novo'}>
-        <div className={styles.floatingButton}>
-          <AddIcon sx={{ fontSize: 40 }} />
-        </div>
-      </Link>
+      <Actions>
+        <AddButton onClick={addUserButtonHandler}>Adicionar</AddButton>
+      </Actions>
     </div>
   )
 }
