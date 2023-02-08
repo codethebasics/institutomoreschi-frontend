@@ -1,11 +1,12 @@
-import axios from 'axios'
 import styles from '@/styles/usuarios/UsersPage.module.scss'
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
-import Image from 'next/image'
-import AddIcon from '@mui/icons-material/Add'
+import axios from 'axios'
 
-import { useState, useEffect } from 'react'
+import UserAvatar from '@/components/users/UserAvatar'
+import styled from '@emotion/styled'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 type User = {
   id: string
@@ -35,22 +36,40 @@ const UserStatusBadge = ({ status }: any) => {
   )
 }
 
-export const CardUser = ({ id, name, email, img, active }: any) => {
+const RolesContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+`
+
+const RoleBadge = styled.div`
+  background: #ccc;
+  font-weight: 500;
+  color: #222;
+  border-radius: 0.4rem;
+  display: inline-flex;
+  padding: 0.25rem 0.5rem;
+`
+
+export const CardUser = ({ id, name, email, active, roles }: any) => {
   return (
     <div className={styles.cardUser}>
       <div className={styles.avatar}>
-        <Image
-          alt="Imagem do usuário"
-          src={`https://randomuser.me/api/portraits/men/${img}.jpg`}
-          width={75}
-          height={75}
-        />
+        <UserAvatar user={{ id, name, email, active }} size={75} />
         <UserStatusBadge status={active} />
       </div>
       <div className={styles.info}>
         <div>{name}</div>
         <div>{email}</div>
         <div>(61) 9 8577 0401</div>
+        <RolesContainer>
+          {roles
+            ? roles.map((data: any) => (
+                <RoleBadge key={data.role.id}>{data.role.name}</RoleBadge>
+              ))
+            : null}
+        </RolesContainer>
       </div>
       <div className={styles.cta}>
         <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/usuarios/${id}`}>
@@ -75,16 +94,30 @@ export const UserList = ({ usuarios, filter }: any) => {
             name={usuario.name}
             email={usuario.email}
             active={usuario.active}
-            img={Math.floor(Math.random() * 100)}
+            roles={usuario.user_role}
           />
         ))}
     </div>
   )
 }
 
+const Actions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0.5rem;
+  border-top: 1px solid #ccc;
+`
+
+const AddButton = styled.button`
+  font-size: 1.4rem;
+  width: auto;
+  background: #1864c7;
+`
+
 export default function UsersPage() {
   const [usuarios, setUsuarios] = useState<User[]>([])
   const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
 
   useEffect(() => {
     axios
@@ -96,6 +129,10 @@ export default function UsersPage() {
       .then(response => setUsuarios(() => response.data))
       .catch(e => console.error(e))
   }, [])
+
+  const addUserButtonHandler = () => {
+    router.push('/usuarios/novo')
+  }
 
   return (
     <div className={styles.userPageContainer}>
@@ -109,11 +146,9 @@ export default function UsersPage() {
         >{`${usuarios.length} usuários encontrados`}</div>
       </div>
       <UserList usuarios={usuarios} filter={searchQuery} />
-      <Link href={'/usuarios/novo'}>
-        <div className={styles.floatingButton}>
-          <AddIcon sx={{ fontSize: 40 }} />
-        </div>
-      </Link>
+      <Actions>
+        <AddButton onClick={addUserButtonHandler}>Adicionar</AddButton>
+      </Actions>
     </div>
   )
 }
