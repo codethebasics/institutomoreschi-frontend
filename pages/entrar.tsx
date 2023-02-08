@@ -1,8 +1,29 @@
 import styles from '@/styles/auth/AuthPage.module.scss'
+import styled from '@emotion/styled'
 import Link from 'next/link'
 
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+
+const SignInButton = styled.button`
+  font-size: 1.4rem;
+  width: auto;
+  background: #1864c7;
+  width: 100%;
+`
+
+const BottomControllers = () => {
+  return (
+    <div className={styles.bottomControllers}>
+      <div>
+        <Link href="/registrar">Registrar</Link>
+      </div>
+      <div>
+        <Link href="/resetar-senha">Esqueci a senha</Link>
+      </div>
+    </div>
+  )
+}
 
 export default function AuthPage() {
   const router = useRouter()
@@ -23,19 +44,6 @@ export default function AuthPage() {
     router.push('/')
   }
 
-  const BottomControllers = () => {
-    return (
-      <div className={styles.bottomControllers}>
-        <div>
-          <Link href="/registrar">Registrar</Link>
-        </div>
-        <div>
-          <Link href="/resetar-senha">Esqueci a senha</Link>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div id={styles.authPageContainer}>
       <form id={styles.form} onSubmit={handleSubmit(login)}>
@@ -51,9 +59,9 @@ export default function AuthPage() {
           />
         </div>
         <div className={styles.cta}>
-          <button type="submit" disabled={!isValid}>
+          <SignInButton type="submit" disabled={!isValid}>
             Entrar
-          </button>
+          </SignInButton>
         </div>
       </form>
       <BottomControllers />

@@ -1,9 +1,11 @@
 import axios from 'axios'
+import UserAvatar from '@/components/users/UserAvatar'
+import styled from '@emotion/styled'
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import UserAvatar from '@/components/users/UserAvatar'
-import styled from '@emotion/styled'
+
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 interface User {
   id: string
@@ -28,17 +30,17 @@ const BioSection = styled.section`
   margin: 1rem 0;
 
   > div:first-of-type {
-    font-size: 3rem;
     font-weight: bold;
+    font-size: 2rem;
   }
 
   > div:nth-of-type(2n) {
-    font-size: 1.8rem;
     font-weight: bold;
+    font-size: 1.3rem;
   }
 
   > div:last-of-type {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 `
 
@@ -48,15 +50,6 @@ const ActionSection = styled.section`
   gap: 1rem;
   margin-top: 1rem;
   flex-wrap: wrap;
-`
-
-const ActionCard = styled.div`
-  background: #f5f5f5;
-  display: flex;
-  flex-grow: 1;
-  padding: 1rem;
-  justify-content: center;
-  border: 1px solid #ddd;
 `
 
 export default function UsersFindByIdPage() {
@@ -77,7 +70,7 @@ export default function UsersFindByIdPage() {
   return (
     <Container>
       <AvatarSection>
-        <UserAvatar user={user} size={125} />
+        <UserAvatar user={user} size={100} />
       </AvatarSection>
       <BioSection>
         {user ? (
@@ -89,9 +82,43 @@ export default function UsersFindByIdPage() {
         ) : null}
       </BioSection>
       <ActionSection>
-        <ActionCard>Histórico Médico</ActionCard>
-        <ActionCard>Arquivos</ActionCard>
-        <ActionCard>Agenda</ActionCard>
+        <Tabs variant="enclosed" size="lg" width="100%">
+          <TabList>
+            <Tab>Histórico</Tab>
+            <Tab>Agenda</Tab>
+            <Tab>Convênios</Tab>
+            <Tab>Procedimentos</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel maxHeight="45vh" overflowY="auto">
+              <p>Início</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Histórico Médico</p>
+              <p>Fim</p>
+            </TabPanel>
+            <TabPanel>
+              <p>Agenda</p>
+            </TabPanel>
+            <TabPanel>
+              <p>Convênios</p>
+            </TabPanel>
+            <TabPanel>
+              <p>Procedimentos</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </ActionSection>
     </Container>
   )

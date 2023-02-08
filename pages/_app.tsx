@@ -3,6 +3,7 @@ import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Layout from '@/components/layout'
 import { Poppins } from '@next/font/google'
+import { ChakraProvider } from '@chakra-ui/react'
 
 const poppins = Poppins({ weight: '400', subsets: ['latin'] })
 
@@ -16,9 +17,11 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ChakraProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
     </>
   )
 }

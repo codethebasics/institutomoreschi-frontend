@@ -40,7 +40,7 @@ export default function Layout({ children }) {
           </Link>
         </div>
         <div className={styles.circle}>
-          <Link href={'/dashboard'}>
+          <Link href={'/usuarios'}>
             <DashboardOutlinedIcon fontSize="large" />
           </Link>
         </div>
