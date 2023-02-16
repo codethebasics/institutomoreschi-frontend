@@ -6,6 +6,10 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import HealthHistoryPage from '@/components/patients/HealthHistoryPage'
+import PatientAgendaPage from '@/components/patients/PatientAgendaPage'
+import PatientProceduresView from '@/components/patients/PatientProceduresView'
+import PatientHealthInsurancePage from '@/components/patients/PatientHealthInsurancePage'
 
 interface User {
   id: string
@@ -18,6 +22,11 @@ const Container = styled.div`
   padding: 1rem;
 `
 
+const Top = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const AvatarSection = styled.section`
   display: flex;
   justify-content: center;
@@ -26,21 +35,23 @@ const AvatarSection = styled.section`
 const BioSection = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 1rem 0;
+  flex-grow: 1;
+  padding: 0 1rem;
 
   > div:first-of-type {
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
 
   > div:nth-of-type(2n) {
-    font-weight: bold;
     font-size: 1.3rem;
+    font-weight: 500;
   }
 
   > div:last-of-type {
     font-size: 1.3rem;
+    font-weight: 500;
+    color: #05448d;
   }
 `
 
@@ -69,18 +80,20 @@ export default function UsersFindByIdPage() {
 
   return (
     <Container>
-      <AvatarSection>
-        <UserAvatar user={user} size={100} />
-      </AvatarSection>
-      <BioSection>
-        {user ? (
-          <>
-            <div>{user.name}</div>
-            <div>{'(61) 9 8577 0401'}</div>
-            <div>{user.email}</div>
-          </>
-        ) : null}
-      </BioSection>
+      <Top>
+        <AvatarSection>
+          <UserAvatar user={user} size={70} />
+        </AvatarSection>
+        <BioSection>
+          {user ? (
+            <>
+              <div>{user.name}</div>
+              <div>{'(61) 9 8577 0401'}</div>
+              <div>{user.email}</div>
+            </>
+          ) : null}
+        </BioSection>
+      </Top>
       <ActionSection>
         <Tabs variant="enclosed" size="lg" width="100%">
           <TabList>
@@ -91,31 +104,16 @@ export default function UsersFindByIdPage() {
           </TabList>
           <TabPanels>
             <TabPanel maxHeight="45vh" overflowY="auto">
-              <p>Início</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Histórico Médico</p>
-              <p>Fim</p>
+              <HealthHistoryPage />
             </TabPanel>
             <TabPanel>
-              <p>Agenda</p>
+              <PatientAgendaPage />
             </TabPanel>
             <TabPanel>
-              <p>Convênios</p>
+              <PatientHealthInsurancePage />
             </TabPanel>
             <TabPanel>
-              <p>Procedimentos</p>
+              <PatientProceduresView />
             </TabPanel>
           </TabPanels>
         </Tabs>
