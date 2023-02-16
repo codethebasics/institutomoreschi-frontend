@@ -1,3 +1,4 @@
+import { api } from '@/services/api'
 import { recoverUserInfo } from '@/services/AuthService'
 import axios from 'axios'
 
@@ -36,9 +37,11 @@ export function AuthProvider({ children }: any) {
 
     if (token) {
       const tokenJson = JSON.parse(token)
-      recoverUserInfo(tokenJson).then(response => {
-        setUser(response.data.body)
-      })
+      recoverUserInfo(tokenJson)
+        .then(response => {
+          setUser(response.data.body)
+        })
+        .catch(e => console.error(e))
     }
   }, [])
 
@@ -62,6 +65,8 @@ export function AuthProvider({ children }: any) {
     setCookie(undefined, 'moreschi.token', JSON.stringify({ token, user }), {
       maxAge: 60 * 60 * 1 // 1 hour
     })
+
+    api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     setUser(user)
 

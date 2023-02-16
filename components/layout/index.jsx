@@ -26,15 +26,8 @@ const Brand = styled.label`
   color: #444;
 `
 export default function Layout({ children }) {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated, user } = useContext(AuthContext)
   const router = useRouter()
-
-  useEffect(() => {
-    console.log('isAuthenticated', isAuthenticated)
-    if (!isAuthenticated) {
-      router.push('/entrar')
-    }
-  }, [])
 
   return (
     <main id={styles.app}>

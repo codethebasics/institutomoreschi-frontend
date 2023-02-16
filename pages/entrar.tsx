@@ -2,9 +2,10 @@ import styles from '@/styles/auth/AuthPage.module.scss'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 
-import { AuthContext, AuthProvider } from '@/context/AuthContext'
-import { useContext } from 'react'
+import { AuthContext } from '@/context/AuthContext'
+import { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 
 const SignInButton = styled.button`
   font-size: 1.4rem;
@@ -27,7 +28,14 @@ const BottomControllers = () => {
 }
 
 export default function AuthPage() {
-  const { signIn } = useContext(AuthContext)
+  const { signIn, user } = useContext(AuthContext)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user) {
+      router.push('/')
+    }
+  }, [])
 
   const {
     register,
