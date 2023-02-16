@@ -52,7 +52,7 @@ const RoleBadge = styled.div`
   padding: 0.25rem 0.5rem;
 `
 
-export const CardUser = ({ id, name, email, active, roles }: any) => {
+export const CardUser = ({ id, name, email, phone, active, roles }: any) => {
   return (
     <div className={styles.cardUser}>
       <div className={styles.avatar}>
@@ -62,7 +62,7 @@ export const CardUser = ({ id, name, email, active, roles }: any) => {
       <div className={styles.info}>
         <div>{name}</div>
         <div>{email}</div>
-        <div>(61) 9 8577 0401</div>
+        <div style={{ padding: '0.5rem 0' }}>{phone}</div>
         <RolesContainer>
           {roles
             ? roles.map((data: any) => (
@@ -93,6 +93,7 @@ export const UserList = ({ usuarios, filter }: any) => {
             id={usuario.id}
             name={usuario.name}
             email={usuario.email}
+            phone={usuario.phone}
             active={usuario.active}
             roles={usuario.user_role}
           />

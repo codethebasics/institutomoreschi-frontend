@@ -4,14 +4,17 @@ import Header from './Header'
 
 import styles from '@/styles/Layout.module.scss'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
+import HealingOutlinedIcon from '@mui/icons-material/HealingOutlined'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
-import LocalHospitalOutlinedIcon from '@mui/icons-material/LocalHospitalOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
 
 import { Lobster } from '@next/font/google'
 import Link from 'next/link'
+import { useContext, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { AuthContext } from '@/context/AuthContext'
 
 const lobster = Lobster({
   weight: '400',
@@ -22,8 +25,10 @@ const Brand = styled.label`
   font-size: 2rem;
   color: #444;
 `
-
 export default function Layout({ children }) {
+  const { isAuthenticated, user } = useContext(AuthContext)
+  const router = useRouter()
+
   return (
     <main id={styles.app}>
       <Header>
@@ -45,8 +50,8 @@ export default function Layout({ children }) {
           </Link>
         </div>
         <div className={styles.circle}>
-          <Link href={'/usuarios'}>
-            <LocalHospitalOutlinedIcon fontSize="large" />
+          <Link href={'/procedimentos'}>
+            <HealingOutlinedIcon fontSize="large" />
           </Link>
         </div>
         <div className={styles.circle}>

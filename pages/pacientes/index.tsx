@@ -1,19 +1,15 @@
-import axios from 'axios'
+import { api } from '@/services/api'
 import styles from '@/styles/pacientes/PatientPage.module.scss'
 import Image from 'next/image'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function PatientPage() {
   const [patients, setPatients] = useState([])
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/patients`, {
-        headers: {
-          Accept: 'application/json'
-        }
-      })
+    api
+      .get('/patients')
       .then(response => {
         setPatients(() => response.data)
       })
