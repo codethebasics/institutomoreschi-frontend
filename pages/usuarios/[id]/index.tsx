@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { parseCookies } from 'nookies'
 
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import HealthHistoryPage from '@/components/patients/HealthHistoryPage'
@@ -66,10 +67,13 @@ const ActionSection = styled.section`
 export default function UsersFindByIdPage() {
   const router = useRouter()
   const { id } = router.query
-
   const [user, setUser] = useState<User>()
+  const [phone, setPhone] = useState<any>(undefined)
 
   useEffect(() => {
+    const { 'moreschi.token': token }: any = parseCookies()
+    const tokenJson = JSON.parse(token)
+    setPhone(tokenJson?.user?.phone)
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/users/id/${id}`)
       .then(response => response.data)
@@ -88,7 +92,7 @@ export default function UsersFindByIdPage() {
           {user ? (
             <>
               <div>{user.name}</div>
-              <div>{'(61) 9 8577 0401'}</div>
+              <div>{phone}</div>
               <div>{user.email}</div>
             </>
           ) : null}

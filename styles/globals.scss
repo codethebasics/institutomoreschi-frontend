@@ -25,7 +25,12 @@ label {
   display: block;
 }
 
-input {
+* {
+  outline: none !important;
+}
+
+input,
+textarea {
   width: 100%;
   padding: 1rem 1.5rem;
   background: #ffffff;
@@ -37,6 +42,10 @@ input {
     outline: 2px solid #444;
     outline-offset: 0px;
   }
+}
+
+textarea {
+  resize: none;
 }
 
 button {
