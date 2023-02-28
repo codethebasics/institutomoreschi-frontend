@@ -1,40 +1,59 @@
-import { api } from '@/services/api'
 import styles from '@/styles/pacientes/PatientPage.module.scss'
-import Image from 'next/image'
 
 import { useEffect, useState } from 'react'
+import * as ArchiveService from '@/services/ArchiveService'
 
-export default function PatientPage() {
-  const [patients, setPatients] = useState([])
+function Imagem({ url, width, height, alt }: any) {
+  console.log('url', url)
+  return url ? <img src={url} width={width} height={height} alt={alt} /> : null
+}
+
+export default function PatientPage({ name, email, phone, photo }: any) {
+  const [patients, setPatients] = useState<any>([])
+  const [avatar, setAvatar] = useState<Blob | null>(null)
+  const [avatarImage, setAvatarImage] = useState<any>(null)
+
+  interface user {
+    id: string
+    name: string
+    phone: string
+    email: string
+    blob: ArrayBuffer
+  }
 
   useEffect(() => {
-    api
-      .get('/patients')
-      .then(response => {
-        setPatients(() => response.data)
-      })
-      .catch(e => console.error(e))
-  }, [])
+    if (photo) {
+      ArchiveService.findById(photo.id)
+        .then(async response => {
+          const blob = new Blob([response.data.blob], { type: 'image/png' })
+          console.log('blob', blob)
+          const url = URL.createObjectURL(blob)
+          console.log('url', url)
+          setAvatarImage(URL.createObjectURL(blob))
+        })
+        .catch(e => console.error(e))
+    }
+  }, [photo])
 
   return (
     <div className={styles.patientPageContainer}>
-      {patients.length ? (
-        <div className={styles.avatarContainer}>
-          <div className={styles.avatar}>
-            <Image
-              src="https://randomuser.me/api/portraits/men/66.jpg"
-              alt={'Imagem do paciente'}
-              width={100}
-              height={100}
+      <div className={styles.avatarContainer}>
+        <div className={styles.avatar}>
+          {avatarImage ? (
+            <Imagem
+              src={avatarImage}
+              width={50}
+              height={50}
+              alt={'avatar image'}
             />
-          </div>
-          <div className={styles.infoContainer}>
-            <span>{patients[0].user.name}</span>
-            <span>(61) 9 8577 0401</span>
-            <span>{patients[0].user.email}</span>
-          </div>
+          ) : null}
         </div>
-      ) : null}
+        <div className={styles.infoContainer}>
+          <span>{name}</span>
+          <span>{phone}</span>
+          <span>{email}</span>
+        </div>
+      </div>
     </div>
   )
 }

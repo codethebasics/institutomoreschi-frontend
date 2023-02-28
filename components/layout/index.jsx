@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { AuthContext } from '@/context/AuthContext'
+import { destroyCookie } from 'nookies'
 
 const lobster = Lobster({
   weight: '400',
@@ -28,6 +29,11 @@ const Brand = styled.label`
 export default function Layout({ children }) {
   const { isAuthenticated, user } = useContext(AuthContext)
   const router = useRouter()
+
+  const handleLogout = () => {
+    destroyCookie(null, 'moreschi.token')
+    router.push('/entrar')
+  }
 
   return (
     <main id={styles.app}>
@@ -60,9 +66,9 @@ export default function Layout({ children }) {
           </Link>
         </div>
         <div className={styles.circle}>
-          <Link href={'/entrar'}>
+          <div onClick={handleLogout}>
             <LogoutOutlinedIcon fontSize="large" />
-          </Link>
+          </div>
         </div>
       </Footer>
     </main>

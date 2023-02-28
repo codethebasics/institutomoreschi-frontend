@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-import { parseCookies } from 'nookies'
-
 type SignInRequestData = {
   email: string
   password: string
