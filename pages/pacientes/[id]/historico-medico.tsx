@@ -98,10 +98,20 @@ export default function PatientMedicalHistoryPage() {
   }, [isTakeSomeMedicineChecked])
 
   const submit = () => {
-    let _history = getValues()
+    let _history: any = getValues()
     _history = { ..._history, patientId: patientId }
     setHistory(_history)
-    console.log('history', _history)
+    console.log('history==>', _history)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/anamnese`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(_history)
+    })
+      .then(response => setHistory(response))
+      .catch(e => console.error(e))
   }
 
   const handleCheckboxClick = (checkboxName: string) => {

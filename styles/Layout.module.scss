@@ -34,7 +34,6 @@
 .content {
   grid-area: content;
   overflow: hidden;
-  background: #fafafa;
 
   > div {
     max-width: 900px;
@@ -61,4 +60,5 @@
   height: 2.5rem;
   width: 2.5rem;
   padding: 1.5rem;
+  cursor: pointer;
 }

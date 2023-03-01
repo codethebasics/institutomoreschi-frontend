@@ -32,45 +32,49 @@ export default function Layout({ children }) {
 
   const handleLogout = () => {
     destroyCookie(null, 'moreschi.token')
-    router.push('/entrar')
+    window.location.href = './'
   }
 
   return (
     <main id={styles.app}>
-      <Header>
-        <Brand>
-          <div className={lobster.className}>Instituto Moreschi</div>
-        </Brand>
-        <MenuIcon color={'#222'} fontSize="large" />
-      </Header>
+      {isAuthenticated ? (
+        <Header>
+          <Brand>
+            <div className={lobster.className}>Instituto Moreschi</div>
+          </Brand>
+          <MenuIcon color={'#222'} fontSize="large" />
+        </Header>
+      ) : null}
       <div className={styles.content}>{children}</div>
-      <Footer>
-        <div className={styles.circle}>
-          <Link href={'/'}>
-            <HomeOutlinedIcon fontSize="large" />
-          </Link>
-        </div>
-        <div className={styles.circle}>
-          <Link href={'/usuarios'}>
-            <DashboardOutlinedIcon fontSize="large" />
-          </Link>
-        </div>
-        <div className={styles.circle}>
-          <Link href={'/procedimentos'}>
-            <HealingOutlinedIcon fontSize="large" />
-          </Link>
-        </div>
-        <div className={styles.circle}>
-          <Link href={'/notificacoes'}>
-            <NotificationsOutlinedIcon fontSize="large" />
-          </Link>
-        </div>
-        <div className={styles.circle}>
-          <div onClick={handleLogout}>
-            <LogoutOutlinedIcon fontSize="large" />
+      {isAuthenticated ? (
+        <Footer>
+          <div className={styles.circle}>
+            <Link href={'/'}>
+              <HomeOutlinedIcon fontSize="large" />
+            </Link>
           </div>
-        </div>
-      </Footer>
+          <div className={styles.circle}>
+            <Link href={'/usuarios'}>
+              <DashboardOutlinedIcon fontSize="large" />
+            </Link>
+          </div>
+          <div className={styles.circle}>
+            <Link href={'/procedimentos'}>
+              <HealingOutlinedIcon fontSize="large" />
+            </Link>
+          </div>
+          <div className={styles.circle}>
+            <Link href={'/notificacoes'}>
+              <NotificationsOutlinedIcon fontSize="large" />
+            </Link>
+          </div>
+          <div className={styles.circle}>
+            <div onClick={handleLogout}>
+              <LogoutOutlinedIcon fontSize="large" />
+            </div>
+          </div>
+        </Footer>
+      ) : null}
     </main>
   )
 }
