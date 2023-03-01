@@ -32,15 +32,16 @@ label {
 input,
 textarea {
   width: 100%;
-  padding: 1rem 1.5rem;
-  background: #ffffff;
-  border: 0.1rem solid #d1d1d1;
+  padding: 0.5rem;
+  background: #fafafa;
   box-shadow: inset 0px 4px 10px rgba(216, 216, 216, 0.25);
   border-radius: 0.4rem;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  color: #555;
 
   &:focus {
-    outline: 2px solid #444;
-    outline-offset: 0px;
+    background: #f2f2f2;
   }
 }
 
