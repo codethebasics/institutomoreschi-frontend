@@ -10,50 +10,10 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   background-color: red;
   outline: none;
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   margin-top: 1rem;
 `
-
-interface Form {
-  patientId: string
-  reasonForConsultation?: string
-  isUnderMedicalTreatment?: boolean
-  takeSomeMedicine?: boolean
-  medicationsUsed?: string
-  familyHistoryOfIllnesses?: string
-  everHadHypertensionHeartAttackOrOther?: boolean
-  everHadHypertensionHeartAttackOrOtherDescription?: string
-  everHadRheumaticFever?: boolean
-  everHadRheumaticFeverDescription?: string
-  everHadCancer?: boolean
-  everHadCancerDescription?: string
-  everHadDiabetes?: boolean
-  everHadDiabetesDescription?: string
-  everHadClottingRelatedProblems?: boolean
-  everHadClottingRelatedProblemsDescription?: string
-  everHadReactionToPenicillin?: boolean
-  everHadReactionToPenicillinDescription?: string
-  everHadHepatitis?: boolean
-  everHadHepatitisDescription: string
-  haveBeenVaccinatedAgainstHepatitisB?: boolean
-  anyLiverProblems?: boolean
-  anyLiverProblemsDescription?: string
-  anyKidneyProblems?: boolean
-  anyKidneyProblemsDescription?: string
-  everHadReactionAgainstAnesthesia?: boolean
-  everHadReactionAgainstAnesthesiaDescription?: string
-  isPregnant?: boolean
-  isPregnantDescription?: string
-  wasSmoker?: boolean
-  wasSmokerDescription?: string
-  isSmoker?: boolean
-  isSmokerDescription?: string
-  drinksAlchol?: boolean
-  drinksAlcholDescription?: string
-  useDrugs?: boolean
-  useDrugsDescription?: string
-}
 
 export default function PatientMedicalHistoryPage() {
   const [patientId, setPatientId] = useState<any>(null)
@@ -76,7 +36,6 @@ export default function PatientMedicalHistoryPage() {
   const { id } = router.query
 
   useEffect(() => {
-    console.log('obtendo dados do paciente...')
     async function fetchData() {
       const cookies = parseCookies()
       const token: any = cookies['moreschi.token']
@@ -93,15 +52,12 @@ export default function PatientMedicalHistoryPage() {
     fetchData()
   })
 
-  useEffect(() => {
-    console.log('isTakeSomeMedicineChecked alterado')
-  }, [isTakeSomeMedicineChecked])
+  useEffect(() => {}, [isTakeSomeMedicineChecked])
 
   const submit = () => {
     let _history: any = getValues()
     _history = { ..._history, patientId: patientId }
     setHistory(_history)
-    console.log('history==>', _history)
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/anamnese`, {
       method: 'post',
       headers: {
@@ -116,14 +72,12 @@ export default function PatientMedicalHistoryPage() {
 
   const handleCheckboxClick = (checkboxName: string) => {
     const checkbox = getValues(checkboxName)
-    console.log('checkboxName', checkboxName)
     switch (checkboxName) {
       case 'isUnderMedicalTreatment':
         setIsUnderMedicalTreatmentChecked(checkbox)
         break
 
       case 'takeSomeMedicine':
-        console.log('cai', !checkbox)
         setIsTakeSomeMedicineChecked(checkbox)
         break
     }
@@ -353,7 +307,7 @@ export default function PatientMedicalHistoryPage() {
 }
 
 const Container = styled.div`
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   max-height: 100%;
@@ -369,8 +323,10 @@ const FormControl = styled.div`
 
 const Label = styled.label`
   font-weight: 500;
+  font-size: 1.4rem;
 `
 
 const Button = styled.button`
   background-color: #222;
+  font-size: 1.4rem;
 `

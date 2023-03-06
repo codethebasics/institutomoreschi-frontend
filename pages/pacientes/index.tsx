@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import * as ArchiveService from '@/services/ArchiveService'
 
 function Imagem({ url, width, height, alt }: any) {
-  console.log('url', url)
   return url ? <img src={url} width={width} height={height} alt={alt} /> : null
 }
 
@@ -26,9 +25,7 @@ export default function PatientPage({ name, email, phone, photo }: any) {
       ArchiveService.findById(photo.id)
         .then(async response => {
           const blob = new Blob([response.data.blob], { type: 'image/png' })
-          console.log('blob', blob)
           const url = URL.createObjectURL(blob)
-          console.log('url', url)
           setAvatarImage(URL.createObjectURL(blob))
         })
         .catch(e => console.error(e))

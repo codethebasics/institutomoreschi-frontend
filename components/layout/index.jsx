@@ -7,15 +7,14 @@ import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
 import HealingOutlinedIcon from '@mui/icons-material/HealingOutlined'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
-import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
 
+import { AuthContext } from '@/context/AuthContext'
 import { Lobster } from '@next/font/google'
 import Link from 'next/link'
-import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { AuthContext } from '@/context/AuthContext'
 import { destroyCookie } from 'nookies'
+import { useContext } from 'react'
 
 const lobster = Lobster({
   weight: '400',
@@ -42,7 +41,6 @@ export default function Layout({ children }) {
           <Brand>
             <div className={lobster.className}>Instituto Moreschi</div>
           </Brand>
-          <MenuIcon color={'#222'} fontSize="large" />
         </Header>
       ) : null}
       <div className={styles.content}>{children}</div>

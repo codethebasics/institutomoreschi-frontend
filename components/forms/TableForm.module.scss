@@ -1,0 +1,16 @@
+.container {
+  table {
+    font-size: 1.4rem;
+    border-collapse: collapse;
+
+    thead th {
+      font-weight: 500;
+    }
+
+    tbody {
+      tr:nth-child(odd) {
+        background: #ececec;
+      }
+    }
+  }
+}

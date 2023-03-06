@@ -9,7 +9,6 @@ export default function UploadPage() {
 function FileUploader() {
   const { register, handleSubmit } = useForm()
   const { 'moreschi.token': token } = parseCookies()
-  console.log('tokenn', token)
 
   const submit = (data: any) => {
     const file = data.file[0]

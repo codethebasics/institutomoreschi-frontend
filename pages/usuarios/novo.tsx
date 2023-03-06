@@ -1,15 +1,23 @@
 import styled from '@emotion/styled'
+import axios from 'axios'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Container = styled.div`
   height: 100%;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    'form'
+    'action';
 `
 
 const HeadingSection = styled.section`
   padding: 1rem;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 500;
 `
 
@@ -26,6 +34,7 @@ const FormController = styled.div`
 
 const Label = styled.label`
   font-weight: 500;
+  font-size: 1.4rem;
 `
 
 const Form = styled.form`
@@ -36,6 +45,7 @@ const Form = styled.form`
 
 const Button = styled.button`
   background: #222;
+  font-size: 1.4rem;
 `
 
 const RoleFormSection = styled.section`
@@ -69,18 +79,98 @@ const Role = styled.div`
 
   label {
     cursor: pointer;
+    font-size: 1.4rem;
   }
 `
 
+interface User {
+  name: string
+  email: string
+  password: string
+  active: string
+  phone: string
+}
+
+interface Role {
+  id: string
+  name: string
+  description: string
+}
+
 export default function UserNewPage() {
-  const { register, handleSubmit, reset, getValues } = useForm()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors }
+  } = useForm()
 
-  const [selectedRoles, setSelectedRoles] = useState([])
+  const [roles, setRoles] = useState<Role[]>([])
+  const [rolesSelected, setRolesSelected] = useState<string[]>([])
 
-  const submit = () => {
-    console.log('submit')
-    const { name, email, password } = getValues()
-    reset()
+  useEffect(() => {
+    async function fetchRoles() {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/roles`
+      )
+      setRoles(response.data)
+    }
+    fetchRoles()
+  }, [])
+
+  const submit = async () => {
+    const {
+      name,
+      email,
+      password,
+      phone,
+      isAdmin,
+      isPaciente,
+      isDentista,
+      isSecretaria
+    } = getValues()
+
+    const _roles: any = []
+    const requestRoles = []
+
+    if (isAdmin) _roles.push('admin')
+    if (isPaciente) _roles.push('paciente')
+    if (isDentista) _roles.push('dentista')
+    if (isSecretaria) _roles.push('secretaria')
+
+    const user: User = {
+      name: name,
+      email: email,
+      password: password,
+      phone: phone,
+      active: 'INACTIVE'
+    }
+
+    const selectedRoles = roles
+      .filter(role => _roles.includes(role.name))
+      .map(role => role.id)
+
+    setRolesSelected(selectedRoles)
+
+    const request = { ...user, user_role: selectedRoles }
+
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/users`,
+      request
+    )
+
+    // reset()
+  }
+
+  const checkIfEmailAlreadyExists = async () => {
+    const { email } = getValues()
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/email/${email}`
+    )
+    if (response.data.body) {
+      alert('o email já está cadastrado')
+    }
   }
 
   return (
@@ -94,7 +184,11 @@ export default function UserNewPage() {
           </FormController>
           <FormController>
             <Label>E-mail</Label>
-            <input type="text" {...register('email')} />
+            <input
+              type="text"
+              {...register('email')}
+              onBlur={checkIfEmailAlreadyExists}
+            />
           </FormController>
           <FormController>
             <Label>Telefone</Label>
@@ -107,25 +201,25 @@ export default function UserNewPage() {
           <RoleFormSection>
             <Role>
               <Label>
-                <input type="checkbox" />
+                <input type="checkbox" {...register('isAdmin')} />
                 <span style={{ marginLeft: '1rem' }}>Admin</span>
               </Label>
             </Role>
             <Role>
               <Label>
-                <input type="checkbox" />
+                <input type="checkbox" {...register('isPaciente')} />
                 <span style={{ marginLeft: '1rem' }}>Paciente</span>
               </Label>
             </Role>
             <Role>
               <Label>
-                <input type="checkbox" />
+                <input type="checkbox" {...register('isDentista')} />
                 <span style={{ marginLeft: '1rem' }}>Dentista</span>
               </Label>
             </Role>
             <Role>
               <Label>
-                <input type="checkbox" />
+                <input type="checkbox" {...register('isSecretaria')} />
                 <span style={{ marginLeft: '1rem' }}>Secretária</span>
               </Label>
             </Role>
@@ -139,7 +233,6 @@ export default function UserNewPage() {
             <input type="text" {...register('cro')} />
           </PacienteFormSection>
           <FormController>
-            <br />
             <Button type="submit">Cadastrar</Button>
           </FormController>
         </Form>

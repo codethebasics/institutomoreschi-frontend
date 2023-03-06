@@ -3,36 +3,29 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { format } from 'date-fns'
+import Image from 'next/image'
 
 const HealthHistoryContainer = styled.div`
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
 `
 
-const Button = styled.div`
-  background: #1864c7;
-  color: #fff;
-  display: flex;
-  padding: 1.2rem;
-  border-radius: 0.4rem;
-  justify-content: center;
-  font-weight: 500;
-  &:active {
-    opacity: 0.5;
-  }
-`
 const MedicalHistoryItemStyle = styled.li`
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
+  margin: 0 0.5rem;
   display: flex;
   justify-content: space-between;
   align-itens: center;
   font-size: 1.4rem;
   font-weight: 500;
   color: #555;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 0.3rem 1rem #ddd;
 `
 
 const Badge = styled.div`
@@ -66,19 +59,37 @@ const MedicalHistory = ({ patientId }: any) => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/medical-history/patientId/${patientId}`
       ).then(response => response.json())
-      console.log('response', response)
       setMedicalHistory(response)
+      console.log('response', response)
     }
     fetchData()
   }, [])
 
   return (
     <div>
-      <label>Histórico médico</label>
+      <div style={{ padding: '0 1rem 1rem 1rem' }}>
+        <Label>Histórico</Label>
+      </div>
       <ul style={{ listStyleType: 'none' }}>
         {medicalHistory &&
           medicalHistory.map(item => (
-            <MedicalHistoryItem item={item} key={item.id} />
+            <div
+              style={{ display: 'flex', flexDirection: 'column' }}
+              key={item.id}
+            >
+              <div>
+                <MedicalHistoryItem item={item} />
+              </div>
+              <div
+                style={{
+                  fontSize: '1.3rem',
+                  alignSelf: 'flex-end',
+                  padding: '0 1rem'
+                }}
+              >
+                <label>Visualizar</label>
+              </div>
+            </div>
           ))}
       </ul>
     </div>
@@ -88,21 +99,27 @@ const MedicalHistory = ({ patientId }: any) => {
 const AnamneseContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100vh;
 `
 
 const AnamneseData = styled.div`
-  padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+  border-radius: 0.4rem;
 `
 
 const AnamneseDataCard = styled.div`
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 5px 5px;
+  border-radius: 0.4rem;
+  padding: 1rem;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   font-size: 1.4rem;
+  border: 1px solid #ddd;
+  background: #fff;
   color: #444;
 `
 
@@ -133,7 +150,6 @@ const Anamnese = ({ id }: any) => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/anamnese/id/${id}`
       ).then(response => response.json())
-      console.log('anamnese', response)
       setAnamnese(response)
     }
     fetchData()
@@ -141,6 +157,9 @@ const Anamnese = ({ id }: any) => {
 
   return (
     <AnamneseContainer>
+      <div style={{ padding: '1rem 1rem 0 1rem' }}>
+        <Label>Anamnese</Label>
+      </div>
       <AnamneseData>
         <AnamneseDataCard>
           <AnamneseDataCardHeader>
@@ -332,6 +351,7 @@ export default function HealthHistoryPage() {
           `${process.env.NEXT_PUBLIC_API_URL}/medical-history/patientId/${id}`
         ).then(response => response.json())
         setMedicalHistory(response)
+        console.log('medical history', medicalHistory)
       }
     }
     fetchData()
@@ -344,10 +364,34 @@ export default function HealthHistoryPage() {
   return (
     <HealthHistoryContainer>
       {medicalHistory ? (
-        <MedicalHistory patientId={'cle5z5hlj000etzucmk4ybe4y'} />
+        <MedicalHistory patientId={'clex02lv2000etzbgp258qksc'} />
       ) : null}
-      <Anamnese id={'cleq9d6pi0000tzao27xr0grc'} />
-      <Button onClick={handleClick}>Adicionar</Button>
+      <Anamnese id={'clex02m980014tzbgzjjw1055'} />
+      <FloatingButton onClick={handleClick}>
+        <Image src={'/img/add-white.svg'} width={25} height={25} alt={'add'} />
+      </FloatingButton>
     </HealthHistoryContainer>
   )
 }
+
+const Label = styled.label`
+  font-size: 1.4rem;
+  font-weight: 500;
+`
+
+const FloatingButton = styled.button`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 10vh;
+  right: 5vw;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 100%;
+  background-color: rgba(0, 101, 255, 0.6);
+
+  &:hover {
+    background-color: rgba(0, 101, 255, 1);
+  }
+`
