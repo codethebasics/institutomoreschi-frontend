@@ -1,16 +1,12 @@
-import axios from 'axios'
 import UserAvatar from '@/components/users/UserAvatar'
 import styled from '@emotion/styled'
+import axios from 'axios'
 
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
+import { useEffect, useState } from 'react'
 
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import HealthHistoryPage from '@/components/patients/HealthHistoryPage'
-import PatientAgendaPage from '@/components/patients/PatientAgendaPage'
-import PatientProceduresView from '@/components/patients/PatientProceduresView'
-import PatientHealthInsurancePage from '@/components/patients/PatientHealthInsurancePage'
 
 interface User {
   id: string
@@ -26,6 +22,7 @@ const Container = styled.div`
 const Top = styled.div`
   display: flex;
   align-items: center;
+  padding: 0 1rem;
 `
 
 const AvatarSection = styled.section`
@@ -57,10 +54,8 @@ const BioSection = styled.section`
 `
 
 const ActionSection = styled.section`
-  padding: 0.5rem;
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
   flex-wrap: wrap;
 `
 
@@ -99,28 +94,7 @@ export default function UsersFindByIdPage() {
         </BioSection>
       </Top>
       <ActionSection>
-        <Tabs variant="enclosed" size="lg" width="100%">
-          <TabList>
-            <Tab>Histórico</Tab>
-            <Tab>Agenda</Tab>
-            <Tab>Convênios</Tab>
-            <Tab>Procedimentos</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel maxHeight="45vh" overflowY="auto">
-              <HealthHistoryPage />
-            </TabPanel>
-            <TabPanel>
-              <PatientAgendaPage />
-            </TabPanel>
-            <TabPanel>
-              <PatientHealthInsurancePage />
-            </TabPanel>
-            <TabPanel>
-              <PatientProceduresView />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        <HealthHistoryPage />
       </ActionSection>
     </Container>
   )

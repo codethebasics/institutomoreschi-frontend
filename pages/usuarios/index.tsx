@@ -1,12 +1,50 @@
 import styles from '@/styles/usuarios/UsersPage.module.scss'
-import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch'
 import axios from 'axios'
 
 import UserAvatar from '@/components/users/UserAvatar'
 import styled from '@emotion/styled'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+
+export default function UsersPage() {
+  const [usuarios, setUsuarios] = useState<User[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users/`, {
+        headers: {
+          Accept: 'application/json'
+        }
+      })
+      .then(response => setUsuarios(() => response.data))
+      .catch(e => console.error(e))
+  }, [])
+
+  const addUserButtonHandler = () => {
+    router.push('/usuarios/novo')
+  }
+
+  return (
+    <div className={styles.userPageContainer}>
+      <div className={styles.searchContainer}>
+        <SearchInput
+          text={searchQuery}
+          onChange={(e: any) => setSearchQuery(e.target.value)}
+        />
+        <div
+          className={styles.userCount}
+        >{`${usuarios.length} usuários encontrados`}</div>
+      </div>
+      <UserList usuarios={usuarios} filter={searchQuery} />
+      <FloatingButton onClick={addUserButtonHandler}>
+        <Image src={'/img/add-white.svg'} width={25} height={25} alt={'add'} />
+      </FloatingButton>
+    </div>
+  )
+}
 
 type User = {
   id: string
@@ -18,6 +56,7 @@ type User = {
 const SearchInput = ({ text, onChange }: any) => {
   return (
     <input
+      style={{ fontSize: '1.4rem' }}
       type="text"
       placeholder="Pesquisar por nome ou e-mail"
       value={text}
@@ -53,8 +92,14 @@ const RoleBadge = styled.div`
 `
 
 export const CardUser = ({ id, name, email, phone, active, roles }: any) => {
+  const router = useRouter()
+
+  const details = () => {
+    router.push(`${process.env.NEXT_PUBLIC_APP_URL}/usuarios/${id}`)
+  }
+
   return (
-    <div className={styles.cardUser}>
+    <div className={styles.cardUser} onClick={details}>
       <div className={styles.avatar}>
         <UserAvatar user={{ id, name, email, active }} size={75} />
         <UserStatusBadge status={active} />
@@ -70,11 +115,6 @@ export const CardUser = ({ id, name, email, phone, active, roles }: any) => {
               ))
             : null}
         </RolesContainer>
-      </div>
-      <div className={styles.cta}>
-        <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/usuarios/${id}`}>
-          <ContentPasteSearchIcon fontSize="large" />
-        </Link>
       </div>
     </div>
   )
@@ -102,54 +142,19 @@ export const UserList = ({ usuarios, filter }: any) => {
   )
 }
 
-const Actions = styled.div`
+const FloatingButton = styled.button`
+  position: absolute;
   display: flex;
-  justify-content: flex-end;
-  padding: 1rem 0.5rem;
-  border-top: 1px solid #ccc;
-`
+  justify-content: center;
+  align-items: center;
+  bottom: 10vh;
+  right: 5vw;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 100%;
+  background-color: rgba(0, 101, 255, 0.6);
 
-const AddButton = styled.button`
-  font-size: 1.4rem;
-  width: auto;
-  background: #1864c7;
-`
-
-export default function UsersPage() {
-  const [usuarios, setUsuarios] = useState<User[]>([])
-  const [searchQuery, setSearchQuery] = useState('')
-  const router = useRouter()
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/users/`, {
-        headers: {
-          Accept: 'application/json'
-        }
-      })
-      .then(response => setUsuarios(() => response.data))
-      .catch(e => console.error(e))
-  }, [])
-
-  const addUserButtonHandler = () => {
-    router.push('/usuarios/novo')
+  &:hover {
+    background-color: rgba(0, 101, 255, 1);
   }
-
-  return (
-    <div className={styles.userPageContainer}>
-      <div className={styles.searchContainer}>
-        <SearchInput
-          text={searchQuery}
-          onChange={(e: any) => setSearchQuery(e.target.value)}
-        />
-        <div
-          className={styles.userCount}
-        >{`${usuarios.length} usuários encontrados`}</div>
-      </div>
-      <UserList usuarios={usuarios} filter={searchQuery} />
-      <Actions>
-        <AddButton onClick={addUserButtonHandler}>Adicionar</AddButton>
-      </Actions>
-    </div>
-  )
-}
+`

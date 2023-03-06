@@ -10,50 +10,10 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   background-color: red;
   outline: none;
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   margin-top: 1rem;
 `
-
-interface Form {
-  patientId: string
-  reasonForConsultation?: string
-  isUnderMedicalTreatment?: boolean
-  takeSomeMedicine?: boolean
-  medicationsUsed?: string
-  familyHistoryOfIllnesses?: string
-  everHadHypertensionHeartAttackOrOther?: boolean
-  everHadHypertensionHeartAttackOrOtherDescription?: string
-  everHadRheumaticFever?: boolean
-  everHadRheumaticFeverDescription?: string
-  everHadCancer?: boolean
-  everHadCancerDescription?: string
-  everHadDiabetes?: boolean
-  everHadDiabetesDescription?: string
-  everHadClottingRelatedProblems?: boolean
-  everHadClottingRelatedProblemsDescription?: string
-  everHadReactionToPenicillin?: boolean
-  everHadReactionToPenicillinDescription?: string
-  everHadHepatitis?: boolean
-  everHadHepatitisDescription: string
-  haveBeenVaccinatedAgainstHepatitisB?: boolean
-  anyLiverProblems?: boolean
-  anyLiverProblemsDescription?: string
-  anyKidneyProblems?: boolean
-  anyKidneyProblemsDescription?: string
-  everHadReactionAgainstAnesthesia?: boolean
-  everHadReactionAgainstAnesthesiaDescription?: string
-  isPregnant?: boolean
-  isPregnantDescription?: string
-  wasSmoker?: boolean
-  wasSmokerDescription?: string
-  isSmoker?: boolean
-  isSmokerDescription?: string
-  drinksAlchol?: boolean
-  drinksAlcholDescription?: string
-  useDrugs?: boolean
-  useDrugsDescription?: string
-}
 
 export default function PatientMedicalHistoryPage() {
   const [patientId, setPatientId] = useState<any>(null)
@@ -353,7 +313,7 @@ export default function PatientMedicalHistoryPage() {
 }
 
 const Container = styled.div`
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   max-height: 100%;
@@ -369,8 +329,10 @@ const FormControl = styled.div`
 
 const Label = styled.label`
   font-weight: 500;
+  font-size: 1.4rem;
 `
 
 const Button = styled.button`
   background-color: #222;
+  font-size: 1.4rem;
 `

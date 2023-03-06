@@ -1,37 +1,39 @@
 .userPageContainer {
-  padding: 0.5rem;
+  height: 100%;
+  padding: 1rem 2rem;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: max-content 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     'search'
-    'list';
+    'list'
+    'actions';
 
   .searchContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1rem 0.5rem;
-    height: 10rem;
+    margin-bottom: 1rem;
     grid-area: search;
-    border-bottom: 1px solid #ccc;
+    padding: 1rem;
 
     .userCount {
       font-size: 1.3rem;
       display: flex;
       justify-content: flex-end;
       color: #888;
+      margin-top: 0.5rem;
     }
   }
 
   .userListContainer {
-    padding: 1.5rem 0.5rem;
+    padding: 1rem;
     display: flex;
+    align-items: flex-start;
     flex-wrap: wrap;
     gap: 1rem;
-    overflow-y: auto;
     grid-area: list;
-    max-height: 40rem;
+    overflow-y: auto;
   }
 }
 
@@ -55,12 +57,19 @@
 
 .cardUser {
   border: 1px solid #ddd;
+  background-color: #fff;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   border-radius: 0.4rem;
   flex-grow: 1;
   max-width: 50rem;
   transition: all 0.2s;
+  cursor: pointer;
+  &:focus,
+  &:hover {
+    box-shadow: 0 0.3rem 1rem #ddd;
+  }
 
   &:hover {
     box-shadow: 0 3px 10px #ddd;
@@ -132,7 +141,7 @@
   background: #0065ff;
   color: #fff;
   position: fixed;
-  right: 2.5rem;
+  right: 1rem;
   bottom: 5rem;
   display: flex;
   justify-content: center;
