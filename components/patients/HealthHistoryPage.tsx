@@ -60,6 +60,7 @@ const MedicalHistory = ({ patientId }: any) => {
         `${process.env.NEXT_PUBLIC_API_URL}/medical-history/patientId/${patientId}`
       ).then(response => response.json())
       setMedicalHistory(response)
+      console.log('response', response)
     }
     fetchData()
   }, [])
@@ -350,6 +351,7 @@ export default function HealthHistoryPage() {
           `${process.env.NEXT_PUBLIC_API_URL}/medical-history/patientId/${id}`
         ).then(response => response.json())
         setMedicalHistory(response)
+        console.log('medical history', medicalHistory)
       }
     }
     fetchData()
@@ -362,9 +364,9 @@ export default function HealthHistoryPage() {
   return (
     <HealthHistoryContainer>
       {medicalHistory ? (
-        <MedicalHistory patientId={'cle5z5hlj000etzucmk4ybe4y'} />
+        <MedicalHistory patientId={'clex02lv2000etzbgp258qksc'} />
       ) : null}
-      <Anamnese id={'cleq9d6pi0000tzao27xr0grc'} />
+      <Anamnese id={'clex02m980014tzbgzjjw1055'} />
       <FloatingButton onClick={handleClick}>
         <Image src={'/img/add-white.svg'} width={25} height={25} alt={'add'} />
       </FloatingButton>

@@ -107,6 +107,7 @@ export default function UserNewPage() {
   } = useForm()
 
   const [roles, setRoles] = useState<Role[]>([])
+  const [rolesSelected, setRolesSelected] = useState<string[]>([])
 
   useEffect(() => {
     async function fetchRoles() {
@@ -149,6 +150,8 @@ export default function UserNewPage() {
     const selectedRoles = roles
       .filter(role => _roles.includes(role.name))
       .map(role => role.id)
+
+    setRolesSelected(selectedRoles)
 
     const request = { ...user, user_role: selectedRoles }
 

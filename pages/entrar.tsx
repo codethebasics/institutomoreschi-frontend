@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 
 import { AuthContext } from '@/context/AuthContext'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
@@ -34,7 +34,31 @@ const BottomControllers = () => {
   )
 }
 
+const MessageContainer = styled.div`
+  background: #222;
+  color: #fff;
+  font-weight: 400;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left; 0;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+function Message({ children, show }: any) {
+  return show ? (
+    <MessageContainer>
+      <div>{children}</div>
+      <div>x</div>
+    </MessageContainer>
+  ) : null
+}
+
 export default function AuthPage() {
+  const [message, setMessage] = useState<any>(null)
   const { signIn, user } = useContext(AuthContext)
   const router = useRouter()
 
@@ -52,33 +76,44 @@ export default function AuthPage() {
     formState: { isValid }
   } = useForm()
 
+  const displayErrorMessage = (message: any) => {
+    setMessage(message)
+    console.log(message)
+  }
+
   const login = async () => {
     const { email, password } = getValues()
-    await signIn({ email, password })
+    setMessage(undefined)
+    signIn({ email, password })
+      .then(response => console.log('response', response))
+      .catch(e => displayErrorMessage(e.response.data.message))
   }
 
   return (
-    <div id={styles.authPageContainer}>
-      <form id={styles.form} onSubmit={handleSubmit(login)}>
-        <div>
-          <Label>E-mail</Label>
-          <input type="email" {...register('email', { required: true })} />
-        </div>
-        <div>
-          <Label>Senha</Label>
-          <input
-            type="password"
-            {...register('password', { required: true })}
-          />
-        </div>
-        <div className={styles.cta}>
-          <SignInButton type="submit" disabled={!isValid}>
-            Entrar
-          </SignInButton>
-        </div>
-      </form>
-      <BottomControllers />
-    </div>
+    <>
+      <Message show={message}>{message}</Message>
+      <div id={styles.authPageContainer}>
+        <form id={styles.form} onSubmit={handleSubmit(login)}>
+          <div>
+            <Label>E-mail</Label>
+            <input type="email" {...register('email', { required: true })} />
+          </div>
+          <div>
+            <Label>Senha</Label>
+            <input
+              type="password"
+              {...register('password', { required: true })}
+            />
+          </div>
+          <div className={styles.cta}>
+            <SignInButton type="submit" disabled={!isValid}>
+              Entrar
+            </SignInButton>
+          </div>
+        </form>
+        <BottomControllers />
+      </div>
+    </>
   )
 }
 

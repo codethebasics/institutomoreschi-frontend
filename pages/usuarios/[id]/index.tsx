@@ -63,6 +63,7 @@ export default function UsersFindByIdPage() {
   const router = useRouter()
   const { id } = router.query
   const [user, setUser] = useState<User>()
+  const [patient, setPatient] = useState<any>()
   const [phone, setPhone] = useState<any>(undefined)
 
   useEffect(() => {
@@ -73,7 +74,16 @@ export default function UsersFindByIdPage() {
       .get(`${process.env.NEXT_PUBLIC_API_URL}/users/id/${id}`)
       .then(response => response.data)
       .then(data => data.body)
-      .then(body => setUser(() => body))
+      .then(body => {
+        setUser(() => body)
+        console.log('setUser', body)
+      })
+      .catch(e => console.error(e))
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/patients/userId/${id}`)
+      .then(response => response.data)
+      .then(data => setPatient(data))
       .catch(e => console.error(e))
   }, [])
 

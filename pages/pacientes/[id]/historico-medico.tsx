@@ -36,7 +36,6 @@ export default function PatientMedicalHistoryPage() {
   const { id } = router.query
 
   useEffect(() => {
-    console.log('obtendo dados do paciente...')
     async function fetchData() {
       const cookies = parseCookies()
       const token: any = cookies['moreschi.token']
@@ -53,15 +52,12 @@ export default function PatientMedicalHistoryPage() {
     fetchData()
   })
 
-  useEffect(() => {
-    console.log('isTakeSomeMedicineChecked alterado')
-  }, [isTakeSomeMedicineChecked])
+  useEffect(() => {}, [isTakeSomeMedicineChecked])
 
   const submit = () => {
     let _history: any = getValues()
     _history = { ..._history, patientId: patientId }
     setHistory(_history)
-    console.log('history==>', _history)
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/anamnese`, {
       method: 'post',
       headers: {
@@ -76,14 +72,12 @@ export default function PatientMedicalHistoryPage() {
 
   const handleCheckboxClick = (checkboxName: string) => {
     const checkbox = getValues(checkboxName)
-    console.log('checkboxName', checkboxName)
     switch (checkboxName) {
       case 'isUnderMedicalTreatment':
         setIsUnderMedicalTreatmentChecked(checkbox)
         break
 
       case 'takeSomeMedicine':
-        console.log('cai', !checkbox)
         setIsTakeSomeMedicineChecked(checkbox)
         break
     }

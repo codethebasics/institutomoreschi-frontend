@@ -83,9 +83,7 @@ const ModalDetails = ({ item, cancel, update }: any) => {
 export default function TableForm() {
   const [showDetails, setShowDetails] = useState<any>(null)
 
-  useEffect(() => {
-    console.log('show details')
-  }, [showDetails])
+  useEffect(() => {}, [showDetails])
 
   const displayDetails = (item: any) => {
     setShowDetails(true)
