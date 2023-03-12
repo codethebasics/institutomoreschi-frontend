@@ -60,7 +60,6 @@ const MedicalHistory = ({ patientId }: any) => {
         `${process.env.NEXT_PUBLIC_API_URL}/medical-history/patientId/${patientId}`
       ).then(response => response.json())
       setMedicalHistory(response)
-      console.log('response', response)
     }
     fetchData()
   }, [])
@@ -142,18 +141,34 @@ const AnamneseDataCardBody = styled.div`
   }
 `
 
-const Anamnese = ({ id }: any) => {
+const Anamnese = ({ id, patientId }: any) => {
   const [anamnese, setAnamnese] = useState<any>(null)
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/anamnese/id/${id}`
-      ).then(response => response.json())
-      setAnamnese(response)
+      if (id) {
+        findAnamneseById(id)
+      }
+      if (patientId) {
+        findAnamneseByPatientId(patientId)
+      }
     }
     fetchData()
   }, [])
+
+  const findAnamneseById = async (id: string) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/anamnese/id/${id}`
+    ).then(response => response.json())
+    setAnamnese(response)
+  }
+
+  const findAnamneseByPatientId = async (id: string) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/anamnese/patientId/${id}`
+    ).then(response => response.json())
+    setAnamnese(response)
+  }
 
   return (
     <AnamneseContainer>
@@ -351,7 +366,6 @@ export default function HealthHistoryPage() {
           `${process.env.NEXT_PUBLIC_API_URL}/medical-history/patientId/${id}`
         ).then(response => response.json())
         setMedicalHistory(response)
-        console.log('medical history', medicalHistory)
       }
     }
     fetchData()
@@ -366,7 +380,7 @@ export default function HealthHistoryPage() {
       {medicalHistory ? (
         <MedicalHistory patientId={'clex02lv2000etzbgp258qksc'} />
       ) : null}
-      <Anamnese id={'clex02m980014tzbgzjjw1055'} />
+      <Anamnese id={id} />
       <FloatingButton onClick={handleClick}>
         <Image src={'/img/add-white.svg'} width={25} height={25} alt={'add'} />
       </FloatingButton>

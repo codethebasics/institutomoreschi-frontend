@@ -19,13 +19,12 @@ const Avatar = styled.div`
 `
 
 export default function UserAvatar({ user, size }: any) {
-  const img = Math.floor(Math.random() * 100)
   return user ? (
     <Container>
       <Avatar>
         <Image
           alt="Imagem do usuário"
-          src={`https://randomuser.me/api/portraits/men/${img}.jpg`}
+          src={`https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg`}
           width={size}
           height={size}
         />

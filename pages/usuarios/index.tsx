@@ -56,7 +56,7 @@ type User = {
 const SearchInput = ({ text, onChange }: any) => {
   return (
     <input
-      style={{ fontSize: '1.4rem' }}
+      style={{ fontSize: '1.4rem', padding: '0.5rem' }}
       type="text"
       placeholder="Pesquisar por nome ou e-mail"
       value={text}

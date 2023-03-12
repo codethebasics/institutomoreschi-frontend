@@ -69,23 +69,32 @@ export default function UsersFindByIdPage() {
   useEffect(() => {
     const { 'moreschi.token': token }: any = parseCookies()
     const tokenJson = JSON.parse(token)
+
     setPhone(tokenJson?.user?.phone)
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/users/id/${id}`)
+
+    fetchUserInfo()
       .then(response => response.data)
       .then(data => data.body)
       .then(body => {
-        setUser(() => body)
-        console.log('setUser', body)
+        console.log('body', body)
       })
       .catch(e => console.error(e))
 
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/patients/userId/${id}`)
+    fetchPatientInfo()
       .then(response => response.data)
       .then(data => setPatient(data))
       .catch(e => console.error(e))
   }, [])
+
+  const fetchUserInfo = async () => {
+    console.log('fetchUserInfo')
+    return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/id/${id}`)
+  }
+
+  const fetchPatientInfo = async () => {
+    console.log('fetchPatientInfo')
+    return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/patients/userId/${id}`)
+  }
 
   return (
     <Container>

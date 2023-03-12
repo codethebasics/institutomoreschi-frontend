@@ -47,7 +47,7 @@ const ProcedimentoNameContainer = styled.div`
 
 const ProcedimentoDetalhesContainer = styled.div`
   padding: 1rem;
-  text-align: left;
+  text-align: right;
   > div:first-child {
     font-weight: 500;
   }
